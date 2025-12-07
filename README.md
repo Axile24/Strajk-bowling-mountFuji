@@ -5,7 +5,8 @@
             - Installera verktyg för testning (React Testing Library finns ofta redan)
             -Installera Mock Service Worker (MSW) - det är ett verktyg som låtsas vara en server
             -Skapa en fil som låter GitHub köra dina tester automatiskt
--Skapa src/mocks/handlers.js och src/mocks/server.js.
+
+#Skapa src/mocks/handlers.js och src/mocks/server.js.
 -Konfigurera MSW:
 Mocka POST-anropet för bokning (returnera bokningsnummer + totalsumma).
 React testing Lib
