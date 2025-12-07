@@ -1,7 +1,6 @@
 # Strajk-bowling-mountFuji
             Målet är att lära mig - Tester, cd, cdi , react, vite, docker ,
-            docker compose, ngnix och Db . Helt enkelt full stack. 
-Plan:
+            docker compose, ngnix och Db . Helt enkelt full stack. Plan:
             J1: 7 Décembre 2025 -
             - Installera verktyg för testning (React Testing Library finns ofta redan)
             -Installera Mock Service Worker (MSW) - det är ett verktyg som låtsas vara en server
@@ -21,3 +20,4 @@ Skapa .github/workflows/tests.yml.
             installerar dependencies
             kör npm test -- --coverage
 Skapa filstruktur för tester
+
