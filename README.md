@@ -42,7 +42,6 @@ npm run test:coverage
 ##  CI/CD
 
 Projektet använder GitHub Actions för CI/CD. Tester körs automatiskt vid varje push till `main`-branchen.
-**Status**: ![Tests](https://github.com/axile24/Strajk-bowling-mountFuji/workflows/Tests/badge.svg)
 
 ...............User Story 1: Boka datum, tid och antal spelare
 - Välj datum och tid
