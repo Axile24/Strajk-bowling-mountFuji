@@ -1,14 +1,14 @@
 name: Tests
 
 # CI/CD Pipeline för Strajk Bowling
-# Detta workflow körs automatiskt när kod pushas till main-branchen
-# eller när någon gör en Pull Request till main
+# Detta workflow körs automatiskt när kod pushas till dev-branchen
+# eller när någon gör en Pull Request till dev
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ dev ]
   pull_request:
-    branches: [ main, dev ]
+    branches: [ dev ]
 
 jobs:
   test:
