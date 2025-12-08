@@ -1,0 +1,16 @@
+{
+  "name": "strajk-bowling",
+  "version": "1.0.0",
+  "description": "Bowling booking system for Strajk Bowling",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend & npm run dev --workspace=backend",
+    "test": "npm run test --workspace=frontend",
+    "install:all": "npm install && npm install --workspace=frontend && npm install --workspace=backend"
+  }
+}
+
