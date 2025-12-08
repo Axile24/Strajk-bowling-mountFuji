@@ -1,0 +1,51 @@
+name: Tests
+
+# CI/CD Pipeline för Strajk Bowling
+# Detta workflow körs automatiskt när kod pushas till main-branchen
+# eller när någon gör en Pull Request till main
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    # Steg 1: Hämta koden från GitHub
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Steg 2: Setup Node.js 20
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+
+    # Steg 3: Installera alla dependencies
+    - name: Install dependencies
+      run: |
+        cd frontend
+        npm ci
+
+    # Steg 4: Kör alla tester
+    # Om testerna misslyckas kommer workflow att stoppa här
+    - name: Run tests
+      run: |
+        cd frontend
+        npm run test -- --run
+
+    # Steg 5: (Valfritt) Kör tester med coverage
+    # Detta visar hur mycket av koden som täcks av tester
+    - name: Generate test coverage
+      run: |
+        cd frontend
+        npm run test:coverage
+      continue-on-error: true  # Fortsätt även om coverage inte är 100%
+
