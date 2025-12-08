@@ -2,10 +2,9 @@
 
 En bowlingbokningsapplikation byggd med React, Vite, Node.js/Express och PostgreSQL.
 
-Plan : 
+## Plan : 
+DAG1..................................
 
-### DAG1..................................
-1. **Installera beroenden:**
 ```bash
 npm run install:all
 ```
@@ -23,10 +22,10 @@ npm run dev
 cd frontend
 npm run dev
 ```
-
 Applikationen är nu tillgänglig på `http://localhost:3000`
-## DAG 2..........................................
-## 🧪 Tester
+
+DAG 2..........................................
+## Tester
 
 Kör tester:
 ```bash
