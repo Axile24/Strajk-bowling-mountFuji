@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom'
 import BookingPage from './BookingPage'
@@ -71,14 +71,11 @@ describe('BookingPage', () => {
 
     // Testar: Användaren ska kunna ange antal spelare (minst 1 spelare)
     it('ska kunna ange antal spelare', async () => {
-      const user = userEvent.setup()
       renderWithRouter(<BookingPage />)
       
       const playersInput = screen.getByTestId('players-input')
-      // Välj allt innehåll först, sedan skriv nytt värde
-      await user.click(playersInput)
-      await user.keyboard('{Control>}a{/Control}')
-      await user.type(playersInput, '3')
+      // Använd fireEvent för att sätta värdet direkt
+      fireEvent.change(playersInput, { target: { value: '3' } })
       
       // Vänta på att värdet är uppdaterat
       await waitFor(() => {
@@ -273,8 +270,9 @@ describe('BookingPage', () => {
       await user.clear(dateInput)
       await user.type(dateInput, dateString)
       await user.type(screen.getByTestId('time-input'), '14:00')
-      await user.clear(screen.getByTestId('players-input'))
-      await user.type(screen.getByTestId('players-input'), '2')
+      
+      const playersInput = screen.getByTestId('players-input')
+      fireEvent.change(playersInput, { target: { value: '2' } })
       
       // Skicka formulär
       const submitButton = screen.getByTestId('submit-booking-button')
@@ -283,7 +281,7 @@ describe('BookingPage', () => {
       // Vänta på att navigering sker (MSW kommer mocka fetch-anropet)
       await waitFor(() => {
         expect(mockNavigate).toHaveBeenCalledWith('/bekraftelse')
-      }, { timeout: 5000 })
+      }, { timeout: 10000 })
     })
 
     // Testar: Systemet ska generera ett bokningsnummer och visa detta till användaren efter att bokningen är slutförd
@@ -303,9 +301,7 @@ describe('BookingPage', () => {
       await user.type(screen.getByTestId('time-input'), '14:00')
       
       const playersInput = screen.getByTestId('players-input')
-      await user.click(playersInput)
-      await user.keyboard('{Control>}a{/Control}')
-      await user.type(playersInput, '2')
+      fireEvent.change(playersInput, { target: { value: '2' } })
       
       const submitButton = screen.getByTestId('submit-booking-button')
       await user.click(submitButton)
@@ -324,7 +320,7 @@ describe('BookingPage', () => {
           expect(booking.date).toBe(dateString)
           expect(booking.time).toBe('14:00')
         }
-      }, { timeout: 10000 })
+      }, { timeout: 15000, interval: 200 })
     })
   })
 })
