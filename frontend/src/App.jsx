@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>🎳 Strajk Bowling</h1>
+        <h1>Strajk Bowling</h1>
         <p>Boka din tid i centrala Bromölla</p>
       </header>
       <main className="app-main">

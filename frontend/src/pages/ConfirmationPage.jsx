@@ -40,7 +40,7 @@ function ConfirmationPage() {
     <div className="confirmation-page">
       {/* data-testid behövs för tester: User Story 5 - Visa bokningsinformation när bokning finns */}
       <div className="confirmation-card" data-testid="confirmation-card">
-        <h2>🎳 Bokning bekräftad!</h2>
+        <h2>Bokning bekräftad!</h2>
         
         <div className="booking-info">
           <div className="info-section">
