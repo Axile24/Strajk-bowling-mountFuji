@@ -32,7 +32,7 @@ jobs:
     - name: Install dependencies
       run: |
         cd frontend
-        npm ci
+        npm install
 
     # Steg 4: Kör alla tester
     # Om testerna misslyckas kommer workflow att stoppa här
