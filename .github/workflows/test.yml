@@ -39,7 +39,7 @@ jobs:
     - name: Run tests
       run: |
         cd frontend
-        npm run test -- --run
+        npm run test -- --run --reporter=verbose
 
     # Steg 5: (Valfritt) Kör tester med coverage
     # Detta visar hur mycket av koden som täcks av tester
