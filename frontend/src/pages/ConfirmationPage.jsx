@@ -1,23 +1,35 @@
+// Importera React hooks
 import { useEffect, useState } from 'react'
+// Importera navigation från React Router
 import { useNavigate } from 'react-router-dom'
+// Importera CSS-filen för styling
 import './ConfirmationPage.css'
 
+// Detta är komponenten för bekräftelsesidan
 function ConfirmationPage() {
+  // useNavigate låter oss navigera till andra sidor
   const navigate = useNavigate()
+  
+  // State för bokningen - börjar med null (ingen bokning)
   const [booking, setBooking] = useState(null)
 
+  // useEffect körs när komponenten laddas första gången
   useEffect(() => {
-    // Hämta bokning från session storage
+    // Hämta bokning från session storage (där vi sparade den på bokningssidan)
     const savedBooking = sessionStorage.getItem('booking')
+    
     if (savedBooking) {
       try {
+        // JSON.parse gör om text tillbaka till JavaScript-objekt
         setBooking(JSON.parse(savedBooking))
       } catch (error) {
+        // Om det inte går att läsa, visa fel i konsolen
         console.error('Fel vid läsning av bokning:', error)
       }
     }
-  }, [])
+  }, [])  // Tom array [] betyder "kör bara en gång när komponenten laddas"
 
+  // Om det inte finns någon bokning, visa "Ingen bokning gjord"
   if (!booking) {
     return (
       <div className="confirmation-page">
@@ -32,10 +44,13 @@ function ConfirmationPage() {
     )
   }
 
-  // Beräkna uppdelning av kostnad
+  // Beräkna kostnadsuppdelning
+  // 120 kr per person
   const playerCost = booking.players.length * 120
+  // 100 kr per bana
   const laneCost = booking.lanes * 100
 
+  // Om det finns en bokning, visa bekräftelsen
   return (
     <div className="confirmation-page">
       {/* data-testid behövs för tester: User Story 5 - Visa bokningsinformation när bokning finns */}
@@ -43,6 +58,7 @@ function ConfirmationPage() {
         <h2>Bokning bekräftad!</h2>
         
         <div className="booking-info">
+          {/* Visa bokningsnummer */}
           <div className="info-section">
             <h3>Bokningsnummer</h3>
             {/* data-testid behövs för tester: User Story 4 - Systemet ska generera och visa bokningsnummer */}
@@ -51,6 +67,7 @@ function ConfirmationPage() {
             </p>
           </div>
 
+          {/* Visa bokningsdetaljer */}
           <div className="info-section">
             <h3>Bokningsdetaljer</h3>
             <p><strong>Datum:</strong> {booking.date}</p>
@@ -59,11 +76,13 @@ function ConfirmationPage() {
             <p><strong>Antal banor:</strong> {booking.lanes}</p>
           </div>
 
+          {/* Visa skostorlekar om det finns några */}
           {booking.shoeSizes && booking.shoeSizes.length > 0 && (
             <div className="info-section">
               <h3>Skostorlekar</h3>
               <ul className="shoe-list">
                 {/* data-testid behövs för tester: User Story 2 - Visa skostorlekar i bekräftelse */}
+                {/* Loopa igenom alla skostorlekar och visa dem */}
                 {booking.shoeSizes.map((shoe, index) => (
                   <li key={index} data-testid={`shoe-size-display-${shoe.player}`}>
                     Spelare {shoe.player}: Storlek {shoe.size}
@@ -73,6 +92,7 @@ function ConfirmationPage() {
             </div>
           )}
 
+          {/* Visa kostnadsuppdelning */}
           <div className="info-section">
             <h3>Kostnad</h3>
             {/* data-testid behövs för tester: User Story 4 - Visa uppdelning mellan spelare och banor */}
@@ -87,6 +107,7 @@ function ConfirmationPage() {
           </div>
         </div>
 
+        {/* Knapp för att göra en ny bokning */}
         <button onClick={() => navigate('/')} className="back-button">
           Gör en ny bokning
         </button>
@@ -95,5 +116,5 @@ function ConfirmationPage() {
   )
 }
 
+// Exportera komponenten så den kan användas i andra filer
 export default ConfirmationPage
-

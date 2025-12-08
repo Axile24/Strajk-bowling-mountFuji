@@ -1,26 +1,38 @@
 name: Tests
 
-# CI/CD Pipeline för Strajk Bowling
-# Detta workflow körs automatiskt när kod pushas till main-branchen
-# eller när någon gör en Pull Request till main
+# Detta är en CI/CD pipeline för Strajk Bowling
+# CI/CD betyder: Continuous Integration / Continuous Deployment
+# Det betyder att testerna körs automatiskt när du pushar kod till GitHub
 
+# När ska detta köras?
+# - När du pushar kod till main-branchen
+# - När någon gör en Pull Request till main-branchen
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
+# Detta är ett "jobb" - en uppsättning steg som körs
 jobs:
   test:
+    # Namnet på jobbet
     name: Run Tests
+    
+    # Kör på en Ubuntu Linux-maskin (Gratis från GitHub)
     runs-on: ubuntu-latest
 
+    # Här är alla steg som ska köras
     steps:
-    # Steg 1: Hämta koden från GitHub
+    
+    # STEG 1: Hämta koden från GitHub
+    # Detta behövs för att GitHub Actions ska kunna se din kod
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Steg 2: Setup Node.js 20
+    # STEG 2: Installera Node.js
+    # Vi behöver Node.js för att köra våra tester
+    # Vi använder version 20 (samma som lokalt)
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
@@ -28,24 +40,29 @@ jobs:
         cache: 'npm'
         cache-dependency-path: package-lock.json
 
-    # Steg 3: Installera alla dependencies
+    # STEG 3: Installera alla paket (dependencies)
+    # Detta är som att köra "npm install" lokalt
+    # Vi går in i frontend-mappen och installerar alla paket
     - name: Install dependencies
       run: |
         cd frontend
         npm install
 
-    # Steg 4: Kör alla tester
+    # STEG 4: Kör alla tester
+    # Detta är det viktigaste steget!
     # Om testerna misslyckas kommer workflow att stoppa här
+    # Det betyder att din kod inte fungerar korrekt
     - name: Run tests
       run: |
         cd frontend
-        npm run test -- --run --reporter=verbose
+        npm run test -- --run
 
-    # Steg 5: (Valfritt) Kör tester med coverage
+    # STEG 5: (Valfritt) Kör tester med coverage
     # Detta visar hur mycket av koden som täcks av tester
+    # continue-on-error: true betyder att även om detta misslyckas, 
+    # så räknas hela workflow som lyckad
     - name: Generate test coverage
       run: |
         cd frontend
         npm run test:coverage
-      continue-on-error: true  # Fortsätt även om coverage inte är 100%
-
+      continue-on-error: true
