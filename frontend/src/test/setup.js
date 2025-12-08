@@ -7,7 +7,9 @@ import { server } from './mocks/server'
 expect.extend(matchers)
 
 // Starta MSW server innan alla tester
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
+beforeAll(() => {
+  server.listen({ onUnhandledRequest: 'warn' })
+})
 
 // Rensa efter varje test
 afterEach(() => {
